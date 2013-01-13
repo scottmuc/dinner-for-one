@@ -34,3 +34,17 @@ Now the two servers are setup for convergence. Simply run the following:
 
 Now when you ssh into them, you should see the motd changes.
 
+## Not All Machines Are Created Equal
+
+Vagrant baseboxes come with chef installed, so that saves a lot of time and work. Depending on how you roll out your own
+infrastructure, you may need to bootstrap your machines so they are ready for 'convergence'. I've added a new node
+definition for an EC2 instance I created.
+
+    # script/ssh-copy-id unfortunately didn't work because I needed authenticate using my amazon pem.
+    # Ended up ssh'ing into the server and putting my public key in manually. Will fix this soon.
+    script/bootstrap ec2-175-41-172-207.ap-southeast-1.compute.amazonaws.com
+    script/converge ec2-175-41-172-207.ap-southeast-1.compute.amazonaws.com
+    ssh root@ec2-175-41-172-207.ap-southeast-1.compute.amazonaws.com
+
+Sure enough, I see that the motd has been modified
+
