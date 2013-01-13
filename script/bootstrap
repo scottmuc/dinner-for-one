@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -e
+
+NODE=$1
+USER=root
+
+ssh ${USER}@${NODE} '/bin/bash -s' < ./script/chef_installer.sh
+
