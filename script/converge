@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -e
+
+NODE=$1
+USER=root
+NODE_JSON=${NODE}.json
+
+if [ "${NODE}" = "" ]; then
+  echo usage: script/converge NODE
+  exit -1
+fi;
+
+if [ ! -f "nodes/${NODE_JSON}" ]; then
+  echo I do not see a nodes/${NODE}.json file
+  exit -1
+fi
+
+ssh ${USER}@${NODE} "yum -y install rsync"
+rsync -avz --rsh="ssh" cookbooks ${USER}@${NODE}:/var/chef
+scp nodes/${NODE_JSON} ${USER}@${NODE}:/tmp/${NODE_JSON}
+ssh ${USER}@${NODE} "chef-solo -j /tmp/${NODE_JSON}"
+

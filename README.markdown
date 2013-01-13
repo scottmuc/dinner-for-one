@@ -25,3 +25,12 @@ Yeah, you could have used vagrant's handy ssh helpers, but that's now how you co
 saying that those helpers aren't useful, it's just when you're trying to treat the vagrant instances like any other IAAS
 provided server, I find it better to use the same scripts for everything.
 
+## Convergence
+
+Now the two servers are setup for convergence. Simply run the following:
+
+    script/converge server1.vagrant
+    script/converge server2.vagrant
+
+Now when you ssh into them, you should see the motd changes.
+
